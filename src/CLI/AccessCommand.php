@@ -3,17 +3,17 @@ namespace Gratis\Access\CLI;
 
 use Gratis\Access\Membership;
 
-final class AccessCommand
-{
+final class AccessCommand {
+
     /**
      * Grant access level to a user.
      * <user_id> : User ID.
      * <level> : Access level (free, premium, vip).
      * @when after_wp_load
      */
-    public function grant($args, $assoc_args): void
-    {
-        Membership::grantAccess((int) $args[0], $args[1]);
+    public function grant($args, $assoc_args): void {
+        unset($assoc_args);
+        Membership::grantAccess((int) $args[0], (string) $args[1]);
         \WP_CLI::success("User #{$args[0]} granted '{$args[1]}' access.");
     }
 
@@ -22,9 +22,10 @@ final class AccessCommand
      * [--level=<level>] : Filter by level.
      * @when after_wp_load
      */
-    public function users($args, $assoc_args): void
-    {
-        $meta_query = !empty($assoc_args['level']) ? [['key' => '_access_level', 'value' => $assoc_args['level']]] : [];
+    public function users($args, $assoc_args): void {
+        unset($args);
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- bounded CLI lookup.
+        $meta_query = !empty($assoc_args['level']) ? [['key' => '_access_level', 'value' => sanitize_key($assoc_args['level'])]] : [];
         $users = get_users(['meta_query' => $meta_query, 'number' => 50]);
         $rows = array_map(fn($u) => [
             'ID' => $u->ID, 'Email' => $u->user_email,
