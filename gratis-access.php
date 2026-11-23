@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Gratis Access
  * Plugin URI: https://github.com/juslintek/gratis-access
- * Description: Membership + content restriction. Access levels, drip content, and per-user gating. Replaces MemberPress ($179/yr).
+ * Description: Membership + content restriction. Access levels, drip content, and per-user gating.
  * Version: 1.0.0
  * Requires at least: 6.0
  * Requires PHP: 8.1
