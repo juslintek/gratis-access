@@ -24,6 +24,7 @@ require_once __DIR__ . '/autoload.php';
 
 add_action('init', [\Gratis\Access\Membership::class, 'register']);
 add_filter('the_content', [\Gratis\Access\Membership::class, 'restrictContent']);
+add_filter('the_excerpt', [\Gratis\Access\Membership::class, 'restrictContent']);
 
 add_action('plugins_loaded', function () {
     if (defined('WP_CLI') && WP_CLI) {
